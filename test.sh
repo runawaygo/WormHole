@@ -1,0 +1,1 @@
+mocha -R spec --compilers coffee:coffee-script
