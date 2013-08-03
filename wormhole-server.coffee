@@ -26,25 +26,23 @@ app.use('/test', (req,res)->
   res.end('superwolf')
 )
 
-
+webot.set('hi', "Weibo was posted successfully!")
 
 webot.set('subscribe',{
   pattern: (info)-> info.is('event') and info.param.event is 'subscribe'
   handler: (info)-> 'hello'
 })
 
-webot.set('hi', "Weibo was posted successfully!")
-
-webot.set('message-from-wechat-user', {
-  pattern: /.*/,
-  handler: (info, next) ->
-    from = info.fromUsername
-    content = info.content
-    console.warn("From: " + from + ", To: " + info.toUsername + ", Type: " + info.type + ", Content: " + content)
-    getAccessToken( from, (accessToken) ->
-      postWeibo(accessToken, content, () ->
-        return next(null, 'weibo posted'))))
-})
+# webot.set('message-from-wechat-user', {
+#   pattern: /.*/,
+#   handler: (info, next) ->
+#     from = info.fromUsername
+#     content = info.content
+#     console.warn("From: " + from + ", To: " + info.toUsername + ", Type: " + info.type + ", Content: " + content)
+#     getAccessToken( from, (accessToken) ->
+#       postWeibo(accessToken, content, () ->
+#         return next(null, 'weibo posted'))))
+# })
 
 webot.watch(app, { token: 'wormhole', path: '/wormhole' })
 
