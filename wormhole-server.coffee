@@ -32,7 +32,9 @@ app.use('/test', (req,res)->
 
 webot.set('subscribe',{
   pattern: (info)-> info.is('event') and info.param.event is 'subscribe'
-  handler: (info)-> 'hello'
+  handler: (info)->
+    console.log info
+    return 'hello'
 })
 
 webot.set('hi', "Weibo was posted successfully!")
