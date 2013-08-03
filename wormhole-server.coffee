@@ -11,17 +11,19 @@ redisClient = redis.createClient(null, '112.124.14.246', redis.print)
 bindUser(wechatId, accessToken)->
   redisClient.set('wechat:' + wechatId, accessToken)
   redisClient.set('accessToken:' + accessToken, wechatId)
+
 getAccessToken(wechatId, callback) ->
   redisClient.get('wechat:' + wechatId, (err, reply) ->
     console.log('redis get error..........>>>> ' + err)
     if err
       # FIXME
+      process.stdout.write err
       return
     else
       if callback then callback(reply.toString()))
 
 app = express()
-app.usa.logger())
+app.use(express.logger())
 app.use('/test', (req,res)->
   res.end('superwolf')
 )
