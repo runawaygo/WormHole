@@ -19,8 +19,8 @@ getAccessToken = (wechatId, callback) ->
       # FIXME
       process.stdout.write err
       return
-    else
-      if callback then callback(reply.toString()))
+    
+    callback(reply.toString())) if callback
 
 app = express()
 app.use(express.logger())
