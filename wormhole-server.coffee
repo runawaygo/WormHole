@@ -3,6 +3,7 @@ webot = require('weixin-robot')
 redis = require('redis')
 require('coffee-script')
 weibo = require("./weibo")
+wx = require('./node_wx/helper/wx')
 
 redisClient = redis.createClient(null, '112.124.14.246', redis.print)
 # redisClient.set('abc','123')
@@ -21,7 +22,6 @@ getAccessToken = (wechatId, callback) ->
       # FIXME
       process.stdout.write err
       return
-    
     callback(reply.toString())) if callback
 
 app = express()
@@ -61,3 +61,7 @@ webot.set('message-from-wechat-user', {
 webot.watch(app, { token: 'wormhole', path: '/wormhole' })
 
 app.listen(8000)
+
+wx.login req, (abc, data) ->
+  process.stdout.write data
+  wx.sender req, {msg:'by wx sender', fakeid: '2690144341', token: data.token}, ()->
