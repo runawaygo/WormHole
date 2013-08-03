@@ -26,10 +26,14 @@ app.use('/test', (req,res)->
   res.end('superwolf')
 )
 
+
+
 webot.set('subscribe',{
   pattern: (info)-> info.is('event') and info.param.event is 'subscribe'
   handler: (info)-> 'hello'
 })
+
+webot.set('hi', "Weibo was posted successfully!")
 
 webot.set('message-from-wechat-user', {
   pattern: /.*/,
