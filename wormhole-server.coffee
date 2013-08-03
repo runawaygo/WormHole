@@ -8,11 +8,11 @@ redisClient = redis.createClient(null, '112.124.14.246', redis.print)
 
 
 
-bindUser(wechatId, accessToken)->
+bindUser = (wechatId, accessToken)->
   redisClient.set('wechat:' + wechatId, accessToken)
   redisClient.set('accessToken:' + accessToken, wechatId)
 
-getAccessToken(wechatId, callback) ->
+getAccessToken = (wechatId, callback) ->
   redisClient.get('wechat:' + wechatId, (err, reply) ->
     console.log('redis get error..........>>>> ' + err)
     if err
@@ -37,15 +37,18 @@ webot.set('subscribe',{
 
 webot.set('hi', "Weibo was posted successfully!")
 
+
 webot.set('message-from-wechat-user', {
-  pattern: /.*/,
-  handler: (info, next) ->
+  pattern: /.*/
+  handler: (info, next)->
     from = info.fromUsername
     content = info.content
     console.warn("From: " + from + ", To: " + info.toUsername + ", Type: " + info.type + ", Content: " + content)
     getAccessToken( from, (accessToken) ->
       postWeibo(accessToken, content, () ->
-        return next(null, 'weibo posted'))))
+        return next(null, 'weibo posted')
+      )
+    )
 })
 
 webot.watch(app, { token: 'wormhole', path: '/wormhole' })
