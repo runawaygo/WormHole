@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/runawaygo/WormHole.png)](https://travis-ci.org/runawaygo/WormHole)
