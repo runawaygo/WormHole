@@ -2,6 +2,10 @@ express = require('express');
 webot = require('weixin-robot');
 
 app = express();
+app.use(express.logger())
+app.use('/test', (req,res)->
+  res.end('superwolf')
+)
 
 webot.set('hi', 'hello');
 
