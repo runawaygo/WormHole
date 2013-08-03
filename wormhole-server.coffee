@@ -27,7 +27,7 @@ getAccessToken = (wechatId, callback) ->
 app = express()
 app.use(express.logger())
 app.use('/test', (req,res)->
-  res.end('superwolf')
+  res.end('holy shit')
 )
 
 webot.set('subscribe',{
