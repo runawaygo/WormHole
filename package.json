@@ -1,6 +1,9 @@
 {
   "name": "my-webot",
   "version": "0.1.1",
+  "scripts":{
+    "preinstall": "npm install -g node-dev connect express coffee-script less mocha should"
+  },
   "repository": {
   },
   "keywords": [
