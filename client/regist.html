@@ -2,16 +2,20 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="ie=7" http-equiv="x-ua-compatible">
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
     <title>Registration</title>
     <script>
-      window.onload = function() {
-        var queryString = window.location.search;
-        console.log( queryString);
-        if( queryString) document.cookie = "wechatId" + "=" + queryString.substring(1);
-      }
+      // window.onload = function() {
+      //   var queryString = window.location.search;
+      //   console.log( queryString);
+      //   if( queryString) document.cookie = "wechatId" + "=" + queryString.substring(1);
+      // }
     </script>
   </head>
   <body>
     <a href="https://api.weibo.com/oauth2/authorize?client_id=3973039044&response_type=code&redirect_uri=http://112.124.14.246/callback"><h1>新浪微博注册</h1></a>
+    <a href="/testCookie"><h1>Test cookie</h1></a>
   </body>
 </html>

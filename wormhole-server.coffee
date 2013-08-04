@@ -6,6 +6,7 @@ UserRepository = require('./lib/userRepository.coffee')
 
 
 serverAddress = '112.124.14.246'
+registAction = "http://#{serverAddress}/regist"
 registUrl = "http://#{serverAddress}/client/regist.html"
 getAccessTokenSuccessUrl = "http://#{serverAddress}/client/success.html"
 
@@ -16,16 +17,26 @@ userRepository = new UserRepository(serverAddress)
 app = express()
 app.use(express.logger())
 app.use(express.cookieParser())
+app.use(express.bodyParser())
 app.use('/client', express.static(__dirname+'/client/'))
 app.use('/test', (req,res)->
   res.end('holy shit')
+)
+app.use('/testCookie', (req,res)->
+  console.log req.cookies
+  res.end JSON.stringify req.cookies
+)
+app.use('/regist', (req,res)->
+  console.log req.query
+  wechatId = req.query.wechatId
+  res.cookie('wechatId', wechatId, { expires: new Date(Date.now() + 900000), httpOnly: true })
+  res.redirect('/client/regist.html')
 )
 app.use('/callback', (req,res)->
   weibo.getAccessToken(req, res, (err, accessToken)->
     if err
       console.log err
-    console.log req
-    console.log req.cookies
+  
     wechatId = req.cookies.wechatId
     console.log '************'
     userRepository.bindUser(wechatId, accessToken)
@@ -57,7 +68,7 @@ webot.set('message-from-wechat-user', {
         weibo.sendUpdate(accessToken, content, () ->
           return next(null, 'weibo posted')
         )
-      next(null, registUrl+'?'+wechatId)
+      next(null, registAction+'?wechatId='+wechatId)
     )
 })
 
