@@ -40,7 +40,7 @@ app.use('/callback', (req,res)->
     wechatId = req.cookies.wechatId
     console.log '************'
     userRepository.bindUser(wechatId, accessToken)
-    res.redirect(getAccessTokenSuccessUrl)
+    res.sendFile(getAccessTokenSuccessUrl)
   )
 )
 
@@ -62,7 +62,8 @@ webot.set('message-from-wechat-user', {
     type = info.type
     content = info.text
 
-    userRepository.getAccessToken(wechatId, (accessToken) ->
+    userRepository.getAccessToken(wechatId, (err, accessToken)->
+      console.log
       console.log accessToken
       if accessToken
         weibo.sendUpdate(accessToken, content, () ->
