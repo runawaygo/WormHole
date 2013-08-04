@@ -24,7 +24,10 @@ app.use('/callback', (req,res)->
   weibo.getAccessToken(req, res, (err, accessToken)->
     if err
       console.log err
+    console.log req
+    console.log req.cookies
     wechatId = req.cookies.wechatId
+    console.log '************'
     userRepository.bindUser(wechatId, accessToken)
     res.redirect(getAccessTokenSuccessUrl)
   )
