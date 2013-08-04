@@ -54,7 +54,7 @@ webot.set('message-from-wechat-user', {
         weibo.sendUpdate(accessToken, content, () ->
           return next(null, 'weibo posted')
         )
-      next(null, registUrl)
+      next(null, registUrl+'?'+wechatId)
     )
 })
 

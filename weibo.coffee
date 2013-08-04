@@ -25,7 +25,7 @@ exports.getAccessToken = (req, res, callback)->
     unless bodyJSON.access_token
       console.log localResponse
       console.log body
-    callback?(bodyJSON.access_token)
+    callback?(null, bodyJSON.access_token)
   )
 exports.sendUpdate = (access_token, content, callback)->
 
