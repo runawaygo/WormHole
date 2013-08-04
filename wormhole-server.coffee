@@ -47,12 +47,9 @@ webot.set('message-from-wechat-user', {
     wechatId = info.uid
     type = info.type
     content = info.text
-    console.log 'fox'
-    next(null, 'weibo posted')
-    console.log 'superwolf'
-    return
 
     userRepository.getAccessToken(wechatId, (accessToken) ->
+      console.log accessToken
       if accessToken
         weibo.sendUpdate(accessToken, content, () ->
           return next(null, 'weibo posted')
