@@ -64,7 +64,7 @@ webot.set('pull-request', {
       return next(null, registAction+'?wechatId='+wechatId) unless accessToken
 
       weibo.checkListUpdate(accessToken, '3455154035094953',0, (data) ->
-        message = (item.user.screen_name+':   \n'+item.text for item in data.statuses[0...5]).join('\n-----------------\n')
+        message = ("@"+item.user.screen_name+':   \n'+item.text for item in data.statuses[0...5]).join('\n-----------------\n')
         next(null, message)
       ) 
     )
