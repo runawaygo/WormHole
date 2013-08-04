@@ -14,7 +14,7 @@ userRepository = new UserRepository(serverAddress)
 
 app = express()
 app.use(express.logger())
-app.use(express.static(__dirname+'/client/'))
+app.use('/client', express.static(__dirname+'/client/'))
 app.use('/test', (req,res)->
   res.end('holy shit')
 )
