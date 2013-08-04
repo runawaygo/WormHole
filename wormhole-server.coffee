@@ -43,13 +43,15 @@ webot.set('hi', "Weibo was posted successfully!")
 webot.set('message-from-wechat-user', {
   pattern: /.*/
   handler: (info, next)->
-    console.log info
+    # console.log info
     wechatId = info.uid
     type = info.type
     content = info.text
+    console.log 'fox'
     next(null, registUrl)
+    console.log 'superwolf'
     return
-    
+
     userRepository.getAccessToken(wechatId, (accessToken) ->
       if accessToken
         weibo.sendUpdate(accessToken, content, () ->
