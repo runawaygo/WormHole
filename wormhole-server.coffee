@@ -7,7 +7,7 @@ UserRepository = require('./lib/userRepository.coffee')
 
 serverAddress = '112.124.14.246'
 registUrl = "http://#{serverAddress}/client/regist.html"
-getAccessTokenSuccessUrl = "//http://#{serverAddress}/success.html"
+getAccessTokenSuccessUrl = "http://#{serverAddress}/success.html"
 
 console.log registUrl
 
