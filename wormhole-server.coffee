@@ -44,11 +44,13 @@ webot.set('message-from-wechat-user', {
   pattern: /.*/
   handler: (info, next)->
     console.log info
-    from = info.uid
+    wechatId = info.uid
     type = info.type
     content = info.text
-
-    userRepository.getAccessToken( from, (accessToken) ->
+    next(null, registUrl)
+    return
+    
+    userRepository.getAccessToken(wechatId, (accessToken) ->
       if accessToken
         weibo.sendUpdate(accessToken, content, () ->
           return next(null, 'weibo posted')

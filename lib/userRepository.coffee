@@ -13,11 +13,11 @@ class UserRepository
 
   getAccessToken:(wechatId, callback) ->
     @redisClient.get('wechat:' + wechatId, (err, reply) ->
-      console.log('redis get error..........>>>> ' + err)
       if err
-        # FIXME
         process.stdout.write err
+        console.log('redis get error..........>>>> ' + err)
         return
+        
       callback(reply) if callback
     )
 
