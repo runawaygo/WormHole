@@ -48,7 +48,7 @@ webot.set('message-from-wechat-user', {
     type = info.type
     content = info.text
     console.log 'fox'
-    next(null, registUrl)
+    next(null, 'weibo posted')
     console.log 'superwolf'
     return
 
