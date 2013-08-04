@@ -106,17 +106,17 @@ exports.checkListUpdate = (accessToken, listId, since, newWeiboHandler)->
   queryString = ("#{key}=#{value}" for key, value of query).join('&')
   console.log queryString
 
-  responseHandler = (res) ->
-    console.log res
-    console.log res.body
-    bodyJSON = JSON.parse res.body
-    if bodyJSON.statuses.length == 0 then return
-    newWeiboHandler(bodyJSON.statuses)
+  # responseHandler = (res) ->
+  #   console.log res
+  #   console.log res.body
+  #   bodyJSON = JSON.parse res.body
+  #   if bodyJSON.statuses.length == 0 then return
+  #   newWeiboHandler(bodyJSON.statuses)
 
   request("https://api.weibo.com"+monitorPathUrl+'?'+queryString, (err, res, body)->
     console.log err
     console.log body
-    newWeiboHandler(body)    
+    newWeiboHandler(body)
 
   )
   # new WeiboRequest('GET', monitorPathUrl, query, null).send(responseHandler)
