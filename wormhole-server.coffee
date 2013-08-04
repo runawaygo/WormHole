@@ -25,8 +25,8 @@ app.use('/callback', (req,res)->
     if err
       console.log err
     wechatId = req.cookies.wechatId
-    userRepository.bindUser(wechatId, accessToken)
     res.redirect(getAccessTokenSuccessUrl)
+    # userRepository.bindUser(wechatId, accessToken)
   )
 )
 
