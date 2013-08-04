@@ -64,6 +64,7 @@ webot.set('pull-request', {
       return next(null, registAction+'?wechatId='+wechatId) unless accessToken
 
       weibo.checkListUpdate(accessToken, '3455154035094953',0, (data) ->
+        console.log data.statuses[0]
         next(null, JSON.stringify(data.statuses[0]))
       ) 
     )
