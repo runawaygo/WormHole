@@ -8,8 +8,10 @@ class UserRepository
     @redisClient = redis.createClient(null, @server, redis.print)
 
   bindUser:(wechatId, accessToken)->
-    @redisClient.set('wechat:' + wechatId, accessToken)
-    @redisClient.set('accessToken:' + accessToken, wechatId)
+    console.log wechatId
+    console.log accessToken
+    @redisClient.set('wechat:'+wechatId, accessToken)
+    @redisClient.set('accessToken:'+accessToken, wechatId)
 
   getAccessToken:(wechatId, callback) ->
     @redisClient.get('wechat:' + wechatId, (err, reply) ->
@@ -17,7 +19,7 @@ class UserRepository
         process.stdout.write err
         console.log('redis get error..........>>>> ' + err)
         return
-        
+
       callback(reply) if callback
     )
 
