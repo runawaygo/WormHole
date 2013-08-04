@@ -1,8 +1,17 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
-  <a href="https://api.weibo.com/oauth2/authorize?client_id=3973039044&response_type=code&redirect_uri=http://112.124.14.246:5188/callback"><h1>新浪微博注册</h1></a>
-  <script>
-    window.onload = function(){
-    }
-  </script>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Registration</title>
+    <script>
+      window.onload = function() {
+        var queryString = window.location.search;
+        console.log( queryString);
+        if( queryString) document.cookie = "wechatId" + "=" + queryString.substring(1);
+      }
+    </script>
+  </head>
+  <body>
+    <a href="https://api.weibo.com/oauth2/authorize?client_id=3973039044&response_type=code&redirect_uri=http://112.124.14.246:5188/callback"><h1>新浪微博注册</h1></a>
+  </body>
 </html>
