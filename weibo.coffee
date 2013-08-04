@@ -101,6 +101,7 @@ exports.checkListUpdate = (accessToken, listId, since, newWeiboHandler)->
   query = 
     'access_token': accessToken
     'list_id': listId
+    'count':5
     'since_id': since
   queryString = ("#{key}=#{value}" for key, value of query).join('&')
   console.log queryString

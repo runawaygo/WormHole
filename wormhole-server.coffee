@@ -53,6 +53,21 @@ webot.set('subscribe',{
 
 webot.set('hi', "Weibo was posted successfully!")
 
+webot.set('pull-request', {
+  pattern: /l/
+  handler: (info, next)->
+    # console.log info
+    wechatId = info.uid
+    type = info.type
+
+    userRepository.getAccessToken(wechatId, (err, accessToken)->
+      return next(null, registAction+'?wechatId='+wechatId) unless accessToken
+
+      weibo.checkListUpdate(accessToken, '3455154035094953',0, (data) ->
+        next(null, JSON.stringify(data))
+      ) 
+    )
+})
 
 webot.set('message-from-wechat-user', {
   pattern: /.*/
