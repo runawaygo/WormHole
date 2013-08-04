@@ -9,6 +9,7 @@
   "keywords": [
   ],
   "dependencies": {
+    "redis":"",
     "weixin-robot":"",
     "express":"",
     "coffee-script":"",
