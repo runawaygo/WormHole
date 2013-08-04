@@ -7,6 +7,7 @@ UserRepository = require('./lib/userRepository.coffee')
 
 serverAddress = '112.124.14.246'
 registUrl = "http://#{serverAddress}/client/regist.html"
+getAccessTokenSuccessUrl = "//http://#{serverAddress}/success.html"
 
 console.log registUrl
 
@@ -14,9 +15,19 @@ userRepository = new UserRepository(serverAddress)
 
 app = express()
 app.use(express.logger())
+app.use(express.cookieParser())
 app.use('/client', express.static(__dirname+'/client/'))
 app.use('/test', (req,res)->
   res.end('holy shit')
+)
+app.use('callback', (req,res)->
+  weibo.getAccessToken(req, res, (err, accessToken)->
+    if err
+      console.log err
+    wechatId = req.cookies.wechatId
+    userRepository.bindUser(wechatId, accessToken)
+    res.redirect(getAccessTokenSuccessUrl)
+  )
 )
 
 webot.set('subscribe',{
