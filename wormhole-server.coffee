@@ -40,7 +40,7 @@ app.use('/callback', (req,res)->
     wechatId = req.cookies.wechatId
     console.log '************'
     userRepository.bindUser(wechatId, accessToken)
-    res.sendFile(getAccessTokenSuccessUrl)
+    res.sendfile(getAccessTokenSuccessUrl)
   )
 )
 
