@@ -10,6 +10,7 @@
   ],
   "dependencies": {
     "redis":"",
+    "request":"",
     "weixin-robot":"",
     "express":"",
     "coffee-script":"",
