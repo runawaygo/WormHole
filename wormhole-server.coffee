@@ -7,7 +7,7 @@ UserRepository = require('./lib/userRepository.coffee')
 
 serverAddress = '112.124.14.246'
 registUrl = "http://#{serverAddress}/client/regist.html"
-getAccessTokenSuccessUrl = "http://#{serverAddress}/success.html"
+getAccessTokenSuccessUrl = "http://#{serverAddress}/client/success.html"
 
 console.log registUrl
 
@@ -25,8 +25,8 @@ app.use('/callback', (req,res)->
     if err
       console.log err
     wechatId = req.cookies.wechatId
+    userRepository.bindUser(wechatId, accessToken)
     res.redirect(getAccessTokenSuccessUrl)
-    # userRepository.bindUser(wechatId, accessToken)
   )
 )
 
