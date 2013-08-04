@@ -20,7 +20,7 @@ app.use('/client', express.static(__dirname+'/client/'))
 app.use('/test', (req,res)->
   res.end('holy shit')
 )
-app.use('callback', (req,res)->
+app.use('/callback', (req,res)->
   weibo.getAccessToken(req, res, (err, accessToken)->
     if err
       console.log err
