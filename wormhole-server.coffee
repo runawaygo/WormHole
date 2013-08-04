@@ -6,12 +6,11 @@ UserRepository = require('./lib/userRepository.coffee')
 
 
 serverAddress = '112.124.14.246'
-registUrl = 'http://#{serverAddress}/regist.html'
+registUrl = "http://#{serverAddress}/regist.html"
+
+console.log registUrl
 
 userRepository = new UserRepository(serverAddress)
-console.log userRepository
-console.log userRepository.getAccessToken
-console.log userRepository.bindUser
 
 app = express()
 app.use(express.logger())
