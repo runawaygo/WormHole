@@ -6,7 +6,7 @@ UserRepository = require('./lib/userRepository.coffee')
 
 
 serverAddress = '112.124.14.246'
-registUrl = "http://#{serverAddress}/regist.html"
+registUrl = "http://#{serverAddress}/client/regist.html"
 
 console.log registUrl
 
@@ -14,7 +14,7 @@ userRepository = new UserRepository(serverAddress)
 
 app = express()
 app.use(express.logger())
-app.use('/client', express.static(__dirname+'/client'))
+app.use(express.static(__dirname+'/client/'))
 app.use('/test', (req,res)->
   res.end('holy shit')
 )
