@@ -5,7 +5,7 @@ redis = require('redis')
 
 class UserRepository
   constructor:(@server)->
-    @redisClient = redis.createClient(null, server, redis.print)
+    @redisClient = redis.createClient(null, @server, redis.print)
 
   bindUser:(wechatId, accessToken)->
     @redisClient.set('wechat:' + wechatId, accessToken)
