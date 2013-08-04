@@ -2,7 +2,7 @@ express = require('express')
 webot = require('weixin-robot')
 require('coffee-script')
 weibo = require("./weibo")
-UserRepository = require('./lib/userRepository')
+UserRepository = require('./lib/userRepository.coffee')
 
 
 serverAddress = '112.124.14.246'
