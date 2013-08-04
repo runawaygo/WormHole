@@ -63,8 +63,6 @@ webot.set('message-from-wechat-user', {
     content = info.text
 
     userRepository.getAccessToken(wechatId, (err, accessToken)->
-      console.log
-      console.log accessToken
       if accessToken
         weibo.sendUpdate(accessToken, content, () ->
           return next(null, 'weibo posted')
