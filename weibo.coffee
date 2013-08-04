@@ -22,24 +22,29 @@ accessTokenLoginUrl = "https://api.weibo.com/oauth2/access_token?client_id=#{app
 
 class WeiboRequest
   constructor: (method, path, query, headers) ->
+    console.log 'holyshit'
+    console.log query
     # FIXME, query string not encoded in this quick prototyping
     queryString = ""
-    if query is not null
-      for paramName in query
-        if queryString.length() > 0
+    if query
+      for paramName of query
+        if queryString.length > 0
           queryString += "&"
         queryString += paramName + "=" + query[paramName]
+    console.log queryString
     @options =
       hostname: 'api.weibo.com'
       port: 443
       method: method
       path: path + '?' + queryString
       headers: headers
+
   send: (responseHandler, requestBody) ->
+    console.log @options
     request = https.request(@options, responseHandler)
     request.on 'error', (e) ->
       console.error(e);
-    if requestBody is not null
+    if requestBody
       request.write(requestBody)
     request.end()
 
@@ -86,19 +91,32 @@ exports.startMonitor = (accessTokenList, newWeiboHandler) ->
       )
     )
 
-checkListUpdate = (accessToken, listId, since, newWeiboHandler) ->
-  query = {
+###
+accessToken:2.00t27bEC43faDB96f2bf5e05MzkK2E
+listId:201012230017819693
+since:null
+(data)->console.log data
+###
+exports.checkListUpdate = (accessToken, listId, since, newWeiboHandler)->
+  query = 
     'access_token': accessToken
     'list_id': listId
     'since_id': since
-  }
+  queryString = ("#{key}=#{value}" for key, value of query).join('&')
+  console.log queryString
+
   responseHandler = (res) ->
+    console.log res
+    console.log res.body
     bodyJSON = JSON.parse res.body
     if bodyJSON.statuses.length == 0 then return
     newWeiboHandler(accessToken, bodyJSON.statuses)
-  new WeiboRequest('GET', monitorPathUrl, query, null).send(responseHandler)
 
-new WeiboRequest('GET', '/2/friendships/groups.json', {access_token: '2.00t27bEC43faDB96f2bf5e05MzkK2E'}, null).send((res) ->
-  res.on 'data', (d) ->
-    process.stdout.write(d)
-)
+  request.get("https://api.weibo.com"+monitorPathUrl+'?'+queryString, (err, res, body)->
+    console.log err
+    console.log body
+    newWeiboHandler(accessToken, body)    
+
+  )
+  # new WeiboRequest('GET', monitorPathUrl, query, null).send(responseHandler)
+
