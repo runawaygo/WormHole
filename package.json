@@ -1,23 +1,32 @@
 {
-  "name": "my-webot",
+  "name": "wormhole",
   "version": "0.1.1",
-  "scripts":{
-    "preinstall": ""
-  },
-  "repository": {
-  },
+  "description": "High performance middleware framework",
   "keywords": [
+    "weibo",
+    "weixin"
   ],
+  "repository": "git://github.com/runaway/WormHole.git",
+  "author": "Tomas Huang <huangguan3112789@gmail.com>",
   "dependencies": {
     "redis":"",
     "request":"",
     "weixin-robot":"",
     "express":"",
-    "coffee-script":"",
     "superagent":"",
-    "mocha":"",
-    "should":""
+    "request":"",
+    "coffee-script":""
   },
-  "author": "Tomas Huang",
-  "license": "MIT"
+  "devDependencies": {
+    "should": "*",
+    "mocha": "*",
+    "coffee-script":"*"
+  },
+  "main": "index",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "mocha --compilers coffee:coffee-script --reporter spec --timeout 600 test"
+  }
 }
