@@ -4,16 +4,15 @@ require('coffee-script')
 weibo = require("./weibo")
 UserRepository = require('./lib/userRepository.coffee')
 
-registAction = "http://#{serverAddress}/regist"
-registUrl = "http://#{serverAddress}/client/regist.html"
-getAccessTokenSuccessUrl = "http://#{serverAddress}/client/success.html"
-
 
 Weibo = require('./weibo')
 
 appkey = "969200639"
 appSecret = "9d00536a5ef653c2ff549e47ade7f06a"
 serverAddress = '112.124.14.246'
+registAction = "http://#{serverAddress}/regist"
+registUrl = "http://#{serverAddress}/client/regist.html"
+getAccessTokenSuccessUrl = "http://#{serverAddress}/client/success.html"
 console.log Weibo
 weiboAuth = new Weibo.WeiboAuth(appkey, appSecret, serverAddress)
 
