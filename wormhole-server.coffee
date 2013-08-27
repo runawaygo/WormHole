@@ -36,7 +36,7 @@ app.use('/regist', (req,res)->
   console.log req.query
   wechatId = req.query.wechatId
   res.cookie('wechatId', wechatId, { expires: new Date(Date.now() + 900000), httpOnly: true })
-  res.redirect(weibo.redirectUrl)
+  res.redirect(registUrl)
 )
 app.use('/callback', weiboAuth.onCallback)
 app.use('/callback', (req,res)->
