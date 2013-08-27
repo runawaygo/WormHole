@@ -4,11 +4,18 @@ require('coffee-script')
 weibo = require("./weibo")
 UserRepository = require('./lib/userRepository.coffee')
 
-
-serverAddress = '112.124.14.246'
 registAction = "http://#{serverAddress}/regist"
 registUrl = "http://#{serverAddress}/client/regist.html"
 getAccessTokenSuccessUrl = "http://#{serverAddress}/client/success.html"
+
+
+Weibo = require('./weibo')
+
+appkey = "969200639"
+appSecret = "9d00536a5ef653c2ff549e47ade7f06a"
+serverAddress = '112.124.14.246'
+console.log Weibo
+weiboAuth = new Weibo.WeiboAuth(appkey, appSecret, serverAddress)
 
 console.log registUrl
 
@@ -30,18 +37,13 @@ app.use('/regist', (req,res)->
   console.log req.query
   wechatId = req.query.wechatId
   res.cookie('wechatId', wechatId, { expires: new Date(Date.now() + 900000), httpOnly: true })
-  res.redirect('/client/regist.html')
+  res.redirect(weibo.redirectUrl)
 )
+app.use('/callback', weiboAuth.onCallback)
 app.use('/callback', (req,res)->
-  weibo.getAccessToken(req, res, (err, accessToken)->
-    if err
-      console.log err
-  
-    wechatId = req.cookies.wechatId
-    console.log '************'
-    userRepository.bindUser(wechatId, accessToken)
-    res.redirect(getAccessTokenSuccessUrl)
-  )
+  wechatId = req.cookies.wechatId
+  userRepository.bindUser(wechatId, weiboAuth.access_token)
+  res.redirect(getAccessTokenSuccessUrl)
 )
 
 webot.set('subscribe',{
@@ -60,10 +62,11 @@ webot.set('pull-request', {
     wechatId = info.uid
     type = info.type
 
-    userRepository.getAccessToken(wechatId, (err, accessToken)->
-      return next(null, registAction+'?wechatId='+wechatId) unless accessToken
+    userRepository.getAccessToken(wechatId, (err, access_token)->
+      return next(null, registAction+'?wechatId='+wechatId) unless access_token
 
-      weibo.checkListUpdate(accessToken, '3455154035094953',0, (data) ->
+      weiboApi = new Weibo.WeiboApi(access_token)
+      weiboApi.statuses_home_timeline((data)->
         message = ("@"+item.user.screen_name+':   \n'+item.text for item in data.statuses[0...5]).join('\n-----------------\n')
         next(null, message)
       ) 
@@ -78,13 +81,12 @@ webot.set('message-from-wechat-user', {
     type = info.type
     content = info.text
 
-    userRepository.getAccessToken(wechatId, (err, accessToken)->
-      if accessToken
-        weibo.sendUpdate(accessToken, content, () ->
-          return next(null, 'weibo posted')
-        )
-      else
-        next(null, registAction+'?wechatId='+wechatId)
+    userRepository.getAccessToken(wechatId, (err, access_token)->
+      return next(null, registAction+'?wechatId='+wechatId) unless access_token
+      weiboApi = new Weibo.WeiboApi(access_token)
+      weiboApi.statuses_update(content,->
+        next(null, 'weibo posted')
+      ) 
     )
 })
 
